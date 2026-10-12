@@ -1,0 +1,42 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="历史记录 · 每日一记吧" Width="720" Height="550" MinWidth="650" MinHeight="500" WindowStartupLocation="CenterOwner">
+  <Grid Margin="22">
+    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <Grid Margin="0,0,0,18">
+      <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+      <StackPanel><TextBlock Text="把日子慢慢收好" FontSize="21" FontWeight="SemiBold"/><TextBlock x:Name="TotalLabel" Foreground="{DynamicResource Muted}" Margin="0,7,0,0" FontSize="11"/></StackPanel>
+      <Button x:Name="ExportButton" Grid.Column="1" Content="导出全部…" Style="{DynamicResource SecondaryButton}" VerticalAlignment="Top" Padding="14,9" FontSize="11"/>
+    </Grid>
+    <Grid Grid.Row="1" Margin="0,0,0,16">
+      <TextBox x:Name="SearchInput" Style="{DynamicResource Input}" Height="44" ToolTip="输入日期或关键词筛选记录"/>
+      <TextBlock x:Name="SearchPlaceholder" Text="搜索日期或关键词…" Foreground="#9AA5B5" VerticalAlignment="Center" Margin="15,0,15,0" IsHitTestVisible="False"/>
+    </Grid>
+    <Grid Grid.Row="2">
+      <Grid.ColumnDefinitions><ColumnDefinition Width="220"/><ColumnDefinition Width="16"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+      <ListBox x:Name="EntryList" BorderBrush="#D8E1EC" BorderThickness="1" Background="#FEFEFD" Foreground="{DynamicResource Ink}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListBox.ItemContainerStyle>
+          <Style TargetType="ListBoxItem">
+            <Setter Property="Margin" Value="5,3"/><Setter Property="Padding" Value="9,9"/><Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem">
+              <Border x:Name="ItemBody" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="1" CornerRadius="8" Padding="{TemplateBinding Padding}"><ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/></Border>
+              <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="ItemBody" Property="Background" Value="#F0F3F8"/></Trigger>
+                <Trigger Property="IsSelected" Value="True"><Setter TargetName="ItemBody" Property="Background" Value="#E8EEF7"/></Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="ItemBody" Property="BorderBrush" Value="#A8BAD4"/></Trigger>
+              </ControlTemplate.Triggers>
+            </ControlTemplate></Setter.Value></Setter>
+          </Style>
+        </ListBox.ItemContainerStyle>
+        <ListBox.ItemTemplate><DataTemplate><StackPanel><TextBlock Text="{Binding FriendlyDate}" FontWeight="SemiBold" Margin="0,0,0,6"/><TextBlock Text="{Binding Summary}" TextTrimming="CharacterEllipsis" Foreground="#7D889B" FontSize="11"/></StackPanel></DataTemplate></ListBox.ItemTemplate>
+      </ListBox>
+      <Grid Grid.Column="2">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <TextBlock x:Name="SelectedDate" Text="选择一条记录" FontSize="17" FontWeight="SemiBold" Margin="0,0,0,14"/>
+        <TextBox x:Name="HistoryInput" Grid.Row="1" Style="{DynamicResource Input}" TextWrapping="Wrap" AcceptsReturn="True" FontSize="14" MaxLength="600" VerticalScrollBarVisibility="Auto" IsEnabled="False"/>
+        <TextBlock x:Name="UpdatedLabel" Grid.Row="2" Foreground="{DynamicResource Muted}" FontSize="11" Margin="0,10,0,14"/>
+        <Button x:Name="SaveEditButton" Grid.Row="3" Content="保存修改" Style="{DynamicResource PrimaryButton}" HorizontalAlignment="Right" IsEnabled="False"/>
+      </Grid>
+    </Grid>
+    <TextBlock x:Name="HistoryStatus" Grid.Row="3" Text="每个日期留下一条小记，可以随时回来看看。" Foreground="{DynamicResource Muted}" FontSize="11" TextWrapping="Wrap" MinHeight="30" Margin="0,16,0,0"/>
+  </Grid>
+</Window>
